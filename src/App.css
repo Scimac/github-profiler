@@ -34,3 +34,38 @@ a:hover {
     color: #ffffffe0;
     text-shadow: #ffffffe0;
 }
+
+.Col.detailPageClass {
+    display: flex;
+    flex-direction: column;
+    padding-inline-start: 2rem;
+    border-inline-start: 1px solid #332f3d;
+    padding-block: 1rem;
+}
+
+img.detailPageImg {
+    width: 125px;
+    height: 125px;
+}
+
+button.closeBtnClass {
+    align-self: end;
+}
+
+span.detailTitleClass {
+    font-size: 2em;
+}
+
+span.aliasClass {
+    text-transform: capitalize;
+    font-size: 1.5rem;
+}
+
+.headerFlexClass {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.detailClass span {
+    color: #858585;
+}
