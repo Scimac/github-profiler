@@ -2,6 +2,16 @@ import React, { useContext, useEffect, useState } from 'react'
 import { CloseButton, Col, Container, Image, Row, Stack } from 'react-bootstrap';
 import { useLocation, useParams } from 'react-router-dom';
 
+const formatDate = (date) => {
+    let res = 'Updated on'
+    if (date) {
+        let parsedDateArray = new Date(date).toDateString().split(' ');
+        res = `${res} ${parsedDateArray.slice(1,3)}, ${parsedDateArray[3]}`
+    }
+
+    return res;
+} 
+
 function DetailScreen() {
     const location = useLocation();
     const searchQuery = useParams();
@@ -72,9 +82,31 @@ function DetailScreen() {
     }
 
     const renderRepo = (userRepo) => {
-        return <div key={userRepo.id} className="repo">
-            {userRepo.full_name}
-        </div>
+        return <Stack key={userRepo.id} className="repoListItem" direction='vertical'>
+            <a href={userRepo.html_url} target='_blank'>{userRepo.full_name}</a>
+            <span className='repoDescpClass'>{userRepo.description ?? '  '}</span>
+            <Stack className='repoInfoItems' direction='horizontal'>
+                {userRepo.language && <span className='repoInfoItemClass'>
+                    <img src='/resources/lang.png' width={'20px'} className='me-1' ></img>
+                    {userRepo.language}
+                </span>}
+                {userRepo.updated_at && <span className='repoInfoItemClass'>
+                    {formatDate(userRepo.updated_at)}
+                </span>}
+                {userData.stargazers_count && <span className='infoItemClass mt-2'>
+                    <img src='/resources/star.png' width={'20px'} className='me-1' ></img>
+                    {userData.stargazers_count}
+                </span>}
+                {userData.watchers_count && <span className='infoItemClass mt-2'>
+                    <img src='/resources/eye.png' width={'20px'} className='me-1' ></img>
+                    {userData.watchers_count}
+                </span>}
+                {userData.license && <a href={userData.license?.url} target='_blank' className='infoItemClass mt-2'>
+                    <img src='/resources/license.png' width={'20px'} className='me-1' ></img>
+                    {userData.license?.name}
+                </a>}
+            </Stack>
+        </Stack>
     }
 
     const UsersNotFound = () => {
@@ -96,10 +128,22 @@ function DetailScreen() {
                     </div>
                     <span className='userBioClass mb-2'>{userData.bio}</span>
                     <Row className='detailClass'>
-                        {userData.email && <span className='emailClass'>{userData.email}</span>}
-                        {userData.location && <span className='locnClass'>{userData.location}</span>}
-                        {userData.blog && <span className='blogClass'>{userData.blog}</span>}
-                        {userData.company && <span className='companyClass'>{userData.company}</span>}
+                        {userData.email && <span className='infoItemClass mt-2'>
+                            <img src='/resources/mail.png' width={'20px'} className='me-2' ></img>
+                            {userData.email}
+                        </span>}
+                        {userData.location && <span className='infoItemClass mt-2'>
+                            <img src='/resources/location.png' width={'20px'} className='me-2' ></img>
+                            {userData.location}
+                        </span>}
+                        {userData.blog && <a href={userData.blog} target='_blank' className='infoItemClass mt-2'>
+                            <img src='/resources/blog.png' width={'20px'} className='me-2' ></img>
+                            {userData.blog}
+                        </a>}
+                        {userData.company && <span className='infoItemClass mt-2'>
+                            <img src='/resources/company.png' width={'20px'} className='me-2' ></img>
+                            {userData.company}
+                        </span>}
                     </Row>
                 </Col>
             </Row>

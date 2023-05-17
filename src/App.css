@@ -69,3 +69,7 @@ span.aliasClass {
 .detailClass span {
     color: #858585;
 }
+
+.infoItemClass img {
+    opacity: 0.65;
+}
