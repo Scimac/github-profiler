@@ -23,4 +23,4 @@ If your JSON file is hosted externally or located inside the public folder of th
 import data from './data.json';
 console.log(data);
 ```
-
+<!-- https://myoctocat.com/build-your-octocat/ -->

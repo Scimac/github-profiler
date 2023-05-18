@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { CloseButton, Col, Container, Image, Row, Stack } from 'react-bootstrap';
 import { useLocation, useParams } from 'react-router-dom';
+import OctoCatNoUsers from "../resources/octocat_noUsers.png";
+import OctoCatNoRepos from "../resources/octocat_noRepos.png";
 
 const formatDate = (date) => {
     let res = 'Updated on'
     if (date) {
         let parsedDateArray = new Date(date).toDateString().split(' ');
-        res = `${res} ${parsedDateArray.slice(1,3)}, ${parsedDateArray[3]}`
+        res = `${res} ${parsedDateArray.slice(1, 3)}, ${parsedDateArray[3]}`
     }
 
     return res;
-} 
+}
 
 function DetailScreen() {
     const location = useLocation();
@@ -65,56 +67,18 @@ function DetailScreen() {
     //     ;
     // }
 
-    const renderUsersListItem = (user) => {
-        // debugger;
-        return <Stack key={user.id} className='userRowClass p-2 m-3' direction='horizontal' gap={5} >
-            <Image thumbnail src={user.avatar_url} width={100} />
-            <div className="vr" />
-            <Stack direction='vertical'>
-                <h4 className='userTitle'>{user.login}</h4>
-                <Stack direction='horizontal' gap={3} >
-                    <a className='userLinks userGithubLink' href={user.html_url} target='_blank'>Github profile</a>
-                    <div className="vr" />
-                    <a className='userLinks' onClick={(e) => fetchUserData(user.login)} >More Details</a>
-                </Stack>
-            </Stack>
-        </Stack>
-    }
-
-    const renderRepo = (userRepo) => {
-        return <Stack key={userRepo.id} className="repoListItem" direction='vertical'>
-            <a href={userRepo.html_url} target='_blank'>{userRepo.full_name}</a>
-            <span className='repoDescpClass'>{userRepo.description ?? '  '}</span>
-            <Stack className='repoInfoItems' direction='horizontal'>
-                {userRepo.language && <span className='repoInfoItemClass'>
-                    <img src='/resources/lang.png' width={'20px'} className='me-1' ></img>
-                    {userRepo.language}
-                </span>}
-                {userRepo.updated_at && <span className='repoInfoItemClass'>
-                    {formatDate(userRepo.updated_at)}
-                </span>}
-                {userData.stargazers_count && <span className='infoItemClass mt-2'>
-                    <img src='/resources/star.png' width={'20px'} className='me-1' ></img>
-                    {userData.stargazers_count}
-                </span>}
-                {userData.watchers_count && <span className='infoItemClass mt-2'>
-                    <img src='/resources/eye.png' width={'20px'} className='me-1' ></img>
-                    {userData.watchers_count}
-                </span>}
-                {userData.license && <a href={userData.license?.url} target='_blank' className='infoItemClass mt-2'>
-                    <img src='/resources/license.png' width={'20px'} className='me-1' ></img>
-                    {userData.license?.name}
-                </a>}
-            </Stack>
-        </Stack>
-    }
-
     const UsersNotFound = () => {
-        return <div style={{ color: 'whitesmoke' }} >Users not found</div>
+        return <Stack direction='vertical'>
+            <img src={OctoCatNoUsers} alt="Github OctoCat" style={{ "width" : "20em"}} width={"240px"} />
+            <div style={{ color: 'whitesmoke' }} >Users not found</div>
+        </Stack>
     }
 
     const ReposNotFound = () => {
-        return <div style={{ color: 'whitesmoke' }} >Repos not found</div>
+        return <Stack direction='vertical'>
+            <img src={OctoCatNoRepos} alt="Github OctoCat" style={{ "width" : "20em"}} width={"240px"} />
+            <div style={{ color: 'whitesmoke' }} >Repos not found</div>
+        </Stack>
     }
 
     const UserDetails = () => {
@@ -148,6 +112,7 @@ function DetailScreen() {
                 </Col>
             </Row>
             <hr></hr>
+            <span className='RepoHeaderTitle'>Repositories ({userRepos.length > 0 ? userRepos.length : 0})</span>
             <Row>
                 {userRepos &&
                     userRepos.length > 0
@@ -157,8 +122,59 @@ function DetailScreen() {
         </div>
     }
 
+    const renderUsersListItem = (user) => {
+        // debugger;
+        return <Stack key={user.id} className='userRowClass p-2 m-3' direction='horizontal' gap={5} >
+            <Image thumbnail src={user.avatar_url} width={100} />
+            <div className="vr" />
+            <Stack direction='vertical'>
+                <h4 className='userTitle'>{user.login}</h4>
+                <Stack direction='horizontal' gap={3} >
+                    <a className='userLinks userGithubLink' href={user.html_url} target='_blank'>Github profile</a>
+                    <div className="vr" />
+                    <a className='userLinks' onClick={(e) => fetchUserData(user.login)} >More Details</a>
+                </Stack>
+            </Stack>
+        </Stack>
+    }
+
+    const renderRepo = (userRepo) => {
+        return <>
+            <Stack key={userRepo.id} className="repoListItem" direction='vertical'>
+                <a href={userRepo.html_url} target='_blank'>{userRepo.full_name}</a>
+                <span className='repoDescpClass'>{userRepo.description ?? '  '}</span>
+                <Stack className='repoInfoItems' direction='horizontal'>
+                    {userRepo.language && <span className='repoInfoItemClass me-3'>
+                        <img src='/resources/lang.png' width={'18px'} className='me-2' ></img>
+                        {userRepo.language}
+                    </span>}
+                    {/* {userRepo.stargazers_count && <div className='vr' ></div>} */}
+                    {userRepo.stargazers_count > 0 && <span className='repoInfoItemClass me-3'>
+                        <img src='/resources/star.png' width={'16px'} className='me-2' ></img>
+                        {userRepo.stargazers_count}
+                    </span>}
+                    {/* {userRepo.watchers_count && <div className='vr' ></div>} */}
+                    {userRepo.watchers_count > 0 && <span className='repoInfoItemClass me-3'>
+                        <img src='/resources/eye.png' width={'16px'} className='me-2' ></img>
+                        {userRepo.watchers_count}
+                    </span>}
+                    {/* {userRepo.license && <div className='vr' ></div>} */}
+                    {userRepo.license && <a href={userRepo.license?.url} target='_blank' className='repoInfoItemClass me-3'>
+                        <img src='/resources/license.png' width={'20px'} className='me-2' ></img>
+                        {userRepo.license?.name}
+                    </a>}
+                </Stack>
+                {userRepo.updated_at && <span className='repoUpdatedByClass'>
+                    {formatDate(userRepo.updated_at)}
+                </span>}
+            </Stack>
+
+            {/* <hr></hr> */}
+        </>
+    }
+
     useEffect(() => {
-        console.log(location, searchQuery);
+        // console.log(location, searchQuery);
         handleSearchUser(location.state.searchUserQuery);
         // simulateService(location.state.searchUserQuery);
     }, [])

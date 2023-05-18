@@ -4,8 +4,13 @@
     align-items: center;
 }
 
+nav.navbar.navbar-expand-md.navbar-dark.bg-dark {
+    background-color: transparent !important;
+    border-bottom: 4px solid #332f3d8a;
+}
+
 .paddingY-7 {
-    padding-block: 7rem;
+    padding-block: 2rem;
 }
 
 h4.userTitle {
@@ -72,4 +77,50 @@ span.aliasClass {
 
 .infoItemClass img {
     opacity: 0.65;
+}
+
+.repoListItem.vstack {
+    border-block-end: 1px solid #332f3d;
+    padding: 1rem;
+}
+
+.repoListItem.vstack > a {
+    font-size: 1.25rem;
+    /* margin-block-end: 0.5rem; */
+}
+
+.repoInfoItems img {
+    opacity: 0.5;
+}
+
+span.repoDescpClass {
+    font-size: 0.9rem;
+    font-weight: 400;
+    opacity: 0.75;
+    margin-block-end: 1rem;
+}
+
+span.repoUpdatedByClass {
+    font-size: 0.9rem;
+    font-weight: 400;
+    opacity: 0.75;
+}
+
+hr {
+    border-color: #332f3d;
+    opacity: 1;
+}
+
+.repoInfoItemClass {
+    font-size: 0.85rem;
+    line-height: 1rem;
+    text-align: center;
+    display: flex;
+    margin-block-end: 0.25rem;
+}
+
+span.RepoHeaderTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-block-end: 0.25rem;
 }

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import { Container, Navbar, Nav, NavDropdown, Form, Button, Row, InputGroup, Col } from 'react-bootstrap';
-import OctoCat from "./resources/github-octocat.svg";
+import OctoCat from "./resources/octocat_welcome.png";
 import NotFound from './components/NotFound';
 import DetailScreen from './components/DetailScreen';
 
@@ -68,7 +68,7 @@ const Home = () => {
     <Container fluid="md" >
       <Row className="paddingY-7">
         <Col className="home-main-content" >
-          <img src={OctoCat} alt="Github OctoCat" width={"240px"} />
+          <img src={OctoCat} alt="Github OctoCat" style={{ "width" : "20em"}} width={"240px"} />
           <InputGroup size="lg" className="mx-auto my-3" style={{ "width": "80%" }} >
             <Form.Control
               aria-label="Large"
